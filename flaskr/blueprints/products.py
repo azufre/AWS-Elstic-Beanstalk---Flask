@@ -2,11 +2,13 @@ from flask import Blueprint, jsonify, request
 
 from ..models.Base import db
 from ..models.Product import Product
+from ..decorators.auth import token_required
 
 bp = Blueprint('products', __name__)
 
 @bp.route('/products/create', methods=['POST'])
-def create_product():
+@token_required
+def create_product(current_user):
 
     data = request.get_json()
 
